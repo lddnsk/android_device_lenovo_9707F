@@ -1,0 +1,1 @@
+TW_DEVICE_VERSION := TB-9707F-1.0b by lddnsk

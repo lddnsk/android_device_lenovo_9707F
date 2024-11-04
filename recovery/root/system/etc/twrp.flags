@@ -2,46 +2,46 @@
 # The filesystem that contains the filesystem checker binary (typically /system) cannot
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 
-# mount point  fstype  device                             device2                flags
+# Mount point       FS           Device               2nd Device                 Flags
+/boot				emmc		/dev/block/bootdevice/by-name/boot				flags=backup=1;display="Boot";slotselect;flashimg=1
+/dtbo				emmc		/dev/block/bootdevice/by-name/dtbo				flags=backup=1;display="DTBO";slotselect;flashimg=1
+/vbmeta				emmc		/dev/block/bootdevice/by-name/vbmeta			flags=backup=1;display="VbMeta";slotselect
+/vbmeta_system		emmc		/dev/block/bootdevice/by-name/vbmeta_system		flags=backup=1;display=vbmeta_system;slotselect
 
-/metadata      ext4    /dev/block/bootdevice/by-name/metadata                    flags=backup=1;display="Metadata";wrappedkey
-/data          f2fs    /dev/block/bootdevice/by-name/userdata                    flags=fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,metadata_encryption=aes-256-xts:wrappedkey_v0,keydirectory=/metadata/vold/metadata_encryption
-/data_image    emmc    /dev/block/bootdevice/by-name/userdata                    flags=backup=1;display="Data Image";flashimg=1
-/boot          emmc    /dev/block/bootdevice/by-name/boot                        flags=backup=1;display="Boot";slotselect;flashimg=1
-/recovery      emmc    /dev/block/bootdevice/by-name/recovery                    flags=backup=1;display="Recovery";slotselect;flashimg=1
-/dtbo          emmc    /dev/block/bootdevice/by-name/dtbo                        flags=backup=1;display="Dtbo";slotselect;flashimg=1
-/misc          emmc    /dev/block/bootdevice/by-name/misc
-/modem         emmc    /dev/block/bootdevice/by-name/modem                       flags=backup=1;display="Modem";slotselect
-/vbmeta_a      emmc    /dev/block/bootdevice/by-name/vbmeta_a                    flags=backup=1;display="Vbmeta_A"
-/vbmeta_b      emmc    /dev/block/bootdevice/by-name/vbmeta_b                    flags=backup=1;display="Vbmeta_B"
-/bluetooth     emmc    /dev/block/bootdevice/by-name/bluetooth                   flags=backup=1;subpartitionof=/modem;slotselect
-/dsp           emmc    /dev/block/bootdevice/by-name/dsp                         flags=backup=1;subpartitionof=/modem;slotselect
-/efs1          emmc    /dev/block/bootdevice/by-name/modemst1                    flags=backup=1;display=EFS
-/efs2          emmc    /dev/block/bootdevice/by-name/modemst2                    flags=backup=1;subpartitionof=/efs1
-/efsc          emmc    /dev/block/bootdevice/by-name/fsc                         flags=backup=1;subpartitionof=/efs1
-/efsg          emmc    /dev/block/bootdevice/by-name/fsg                         flags=backup=1;subpartitionof=/efs1
-/persist       ext4    /dev/block/bootdevice/by-name/persist                     flags=backup=1;display="Persist"
-/persist_image emmc    /dev/block/bootdevice/by-name/persist                     flags=backup=1;display="Persist Image";flashimg=1
-/frp           emmc    /dev/block/bootdevice/by-name/frp                         flags=backup=1;display=frp
-/fpinfo        emmc    /dev/block/bootdevice/by-name/fpinfo                      flags=backup=1;display=fpinfo
-/devcfg        emmc    /dev/block/bootdevice/by-name/devcfg                      flags=backup=1;display=devcfg;slotselect
-#/devinfo      emmc    /dev/block/bootdevice/by-name/devinfo                     flags=backup=1;display=devinfo;slotselect
-/featenabler   emmc    /dev/block/bootdevice/by-name/featenabler                 flags=backup=1;display=featenabler;slotselect
-/imagefv       emmc    /dev/block/bootdevice/by-name/imagefv                     flags=backup=1;display=imagefv;slotselect
-/hyp           emmc    /dev/block/bootdevice/by-name/hyp                         flags=backup=1;display=hyp;slotselect
-/keymaster     emmc    /dev/block/bootdevice/by-name/keymaster                   flags=backup=1;display=keymaster;slotselect
-/logdump       emmc    /dev/block/bootdevice/by-name/logdump                     flags=backup=1;display=logdump
-/logfs         emmc    /dev/block/bootdevice/by-name/logfs                       flags=backup=1;display=logfs
-/msadp         emmc    /dev/block/bootdevice/by-name/msadp                       flags=backup=1;display=msadp
-/qupfw         emmc    /dev/block/bootdevice/by-name/qupfw                       flags=backup=1;display=qupfw;slotselect
-/secdata       emmc    /dev/block/bootdevice/by-name/secdata                     flags=backup=1;display=secdata
-/spunvm        emmc    /dev/block/bootdevice/by-name/spunvm                      flags=backup=1;display=spunvm
-/storsec       emmc    /dev/block/bootdevice/by-name/storsec                     flags=backup=1;display=storsec
-/uefisecapp    emmc    /dev/block/bootdevice/by-name/uefisecapp                  flags=backup=1;display=uefisecapp;slotselect
-/uefivarstore  emmc    /dev/block/bootdevice/by-name/uefivarstore                flags=backup=1;display=uefivarstore
-/vbmeta_system emmc    /dev/block/bootdevice/by-name/vbmeta_system               flags=backup=1;display=vbmeta_system;slotselect
-/vm-data       emmc    /dev/block/bootdevice/by-name/vm-data                     flags=backup=1;display=vm-data
-/vm-keystore   emmc    /dev/block/bootdevice/by-name/vm-keystore                 flags=backup=1;display=vm-keystore
+# Logical Points
+system              /system      ext4        ro,barrier=1,discard                wait,logical,first_stage_mount
+vendor              /vendor      ext4        ro,barrier=1,discard                wait,logical,first_stage_mount
+product             /product     ext4        ro,barrier=1,discard                wait,logical,first_stage_mount
+odm                 /odm         ext4        ro,barrier=1,discard                wait,logical,first_stage_mount
 
-# Removable storage
-/usb_otg       vfat    /dev/block/sdg1                    /dev/block/sdg         flags=fsflags=utf8;display="USB-OTG";storage;wipeingui;removable
+# Direct image flashing
+/system_image		emmc		/dev/block/bootdevice/by-name/system			flags=backup=1;flashimg=1;display="System Image"
+/system_ext_image	emmc		/dev/block/bootdevice/by-name/system_ext		flags=backup=1;flashimg=1;display="System EXT Image"
+/odm_image			emmc		/dev/block/bootdevice/by-name/odm				flags=backup=1;flashimg=1;display="ODM Image"
+/product_image		emmc		/dev/block/bootdevice/by-name/product			flags=backup=1;flashimg=1;display="Product Image"
+/vendor_image		emmc		/dev/block/bootdevice/by-name/vendor			flags=backup=1;flashimg=1;display="Vendor Image"
+/recovery			emmc		/dev/block/bootdevice/by-name/recovery			flags=backup=1;flashimg=1;display="Recovery";slotselect
+
+# ETC Moint Point
+#/metadata			ext4		/dev/block/bootdevice/by-name/metadata			flags=backup=1;display="Metadata";wipeingui
+/metadata			ext4		/dev/block/bootdevice/by-name/metadata			flags=backup=1;display="Metadata";wrappedkey;wipeingui
+
+/modem				emmc		/dev/block/bootdevice/by-name/modem				flags=backup=1;display="Modem";slotselect
+/bluetooth			emmc		/dev/block/bootdevice/by-name/bluetooth			flags=backup=1;subpartitionof=/modem;slotselect
+/dsp				emmc		/dev/block/bootdevice/by-name/dsp				flags=backup=1;subpartitionof=/modem;slotselect
+/efs1				emmc		/dev/block/bootdevice/by-name/modemst1			flags=backup=1;display="EFS"
+/efs2				emmc		/dev/block/bootdevice/by-name/modemst2			flags=backup=1;subpartitionof=/efs1
+/efsc				emmc		/dev/block/bootdevice/by-name/fsc				flags=backup=1;subpartitionof=/efs1
+/efsg				emmc		/dev/block/bootdevice/by-name/fsg				flags=backup=1;subpartitionof=/efs1
+/frp				emmc		/dev/block/bootdevice/by-name/frp				flags=backup=1;display="FRP"
+/fpinfo				emmc		/dev/block/bootdevice/by-name/fpinfo			flags=backup=1;display="fpinfo";flashimg=1
+
+# Persist Point
+#/persist			ext4		/dev/block/bootdevice/by-name/persist			flags=backup=1;display="Persist";fsflags=ro
+/persist_image		emmc		/dev/block/bootdevice/by-name/persist			flags=backup=1;display="Persist Image";flashimg=1
+
+# SD Card & USB-OTG Points
+/external_sd		auto		/dev/block/mmcblk0p1	/dev/block/mmcblk0		flags=display="Micro SD Card";storage;wipeingui;removable
+/usb_otg			auto		/dev/block/sdg1			/dev/block/sdg			flags=fsflags=utf8;display="USB-OTG";storage;wipeingui;removable
+#/usb_otg			auto		/dev/block/sdg1			/dev/block/sdg			flags=fsflags=utf8;display="USB-OTG";storage;wipeingui;removable
+#/usb_otg			vfat		/dev/block/sdg1			/dev/block/sdg			flags=fsflags=utf8;display="USB-OTG";storage;wipeingui;removable

@@ -25,6 +25,8 @@
 
 DEVICE_PATH := device/lenovo/9707F
 
+include $(DEVICE_PATH)/device-version.mk
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-2a
@@ -228,7 +230,26 @@ TW_INCLUDE_REPACKTOOLS := false
 #TW_INCLUDE_REPACKTOOLS := true
 
 # TWRP specific build flags
-TW_THEME := portrait_hdpi
+
+#TW_THEME := portrait_hdpi
+#RECOVERY_TOUCHSCREEN_SWAP_XY := true
+#RECOVERY_TOUCHSCREEN_FLIP_Y := true
+ifeq ($(USE_LANDSCAPE),true)
+	RECOVERY_TOUCHSCREEN_FLIP_Y := true
+	RECOVERY_TOUCHSCREEN_SWAP_XY := true
+	TW_THEME := landscape_hdpi
+#	TARGET_RECOVERY_DENSITY := xxhdpi
+	TW_ROTATION := 90
+#	DEVICE_RESOLUTION := 2560x1600
+else
+	RECOVERY_TOUCHSCREEN_FLIP_Y := false
+	RECOVERY_TOUCHSCREEN_SWAP_XY := false
+	TW_THEME := portrait_hdpi
+#	TARGET_RECOVERY_DENSITY := xxhdpi
+	TW_ROTATION := 0
+#	DEVICE_RESOLUTION := 1600x2560
+endif
+
 TW_EXTRA_LANGUAGES := true
 # Added following line from stock
 TW_SCREEN_BLANK_ON_BOOT := true
@@ -257,8 +278,6 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libpcrecpp.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so
-#RECOVERY_TOUCHSCREEN_SWAP_XY := true
-#RECOVERY_TOUCHSCREEN_FLIP_Y := true
 
 # Added the following to see if it sets the backup path.
 TW_STORAGE_PATH := /external_sd

@@ -21,4 +21,3 @@ COMMON_LUNCH_CHOICES := \
 	twrp_9707F-user \
 	twrp_9707F-userdebug \
 	twrp_9707F-eng
-
