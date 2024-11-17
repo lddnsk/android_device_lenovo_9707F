@@ -37,7 +37,7 @@ odm                 /odm         ext4        ro,barrier=1,discard               
 /fpinfo				emmc		/dev/block/bootdevice/by-name/fpinfo			flags=backup=1;display="fpinfo";flashimg=1
 
 # Persist Point
-#/persist			ext4		/dev/block/bootdevice/by-name/persist			flags=backup=1;display="Persist";fsflags=ro
+/persist			ext4		/dev/block/bootdevice/by-name/persist			flags=backup=1;display="Persist";fsflags=ro
 /persist_image		emmc		/dev/block/bootdevice/by-name/persist			flags=backup=1;display="Persist Image";flashimg=1
 
 # SD Card & USB-OTG Points
