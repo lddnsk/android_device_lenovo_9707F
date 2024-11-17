@@ -1,7 +1,7 @@
 # twrp_device_lenovo_9707F
 
 Works:
-- Screen, Touch, Vibro, Data encryption, MTP, ADB
+- Screen, Touch, Vibro, Data encryption, MTP, ADB, FastbootD
 
 For install run the following command.
    ```sh
